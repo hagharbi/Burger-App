@@ -8,20 +8,23 @@
                 <div class="card-header text-center">
                     <h4>New Burgers</h4>
                 </div>
-                <div class="card-body">
-            
-                    {{#each undevouredList}}
-                    <div>
-                        <p>{{id}}.) {{burger_name}}
-                            <button class="btn btn-sm btn-outline-danger m-1 devour-btn float-right" data-burger="{{id}}">Devour<i
-                                    class="fas fa-utensils ml-2"></i>
-            
-            
-                            </button>
-                        </p>
+                <div class="row">
+                    <div class="card-body">
+                        <div>
+                                {{#each burger_data}}
+                                {{#unless this.devoured}}
+                                    <form class="devour-form button-size">
+                                    <p>{{this.id}}. {{this.burger_name}}
+
+                                        <input type="hidden" class="burger_id" type="text" value={{this.id}}>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger m-1 devour-btn float-right">Devour it!<i class="fas fa-utensils ml-2"></i></button>
+                                        </input>
+                                    </p>
+                                    </form>
+                                {{/unless}}
+                                {{/each}}
+                        </div>
                     </div>
-                    {{/each }}
-            
                 </div>
             </div>
         </div>
@@ -31,23 +34,26 @@
                     <h4>Devoured</h4>
                 </div>
                 <div class="card-body">
-            
-                    {{#each devouredList}}
-                    <div>{{id}}.) {{burger_name}}</div>
-                    {{/each }}
-            
+                    <div class="col-xs-6 text-center" class="task">
+                        {{#each burger_data}}
+                        {{#if this.devoured}}
+                        <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly></input>
+                        {{/if}}
+                        {{/each}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Burger Name" aria-label="Burger Name"
-                    id="burgerName">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-success" type="button" id="addBurger">Add</button>
-                </div>
+            <div class="col-xs-12 text-center enter_section">
+                <form action="/burgers/create" method="POST">
+                    <input type="text" class="form-control" name="burger_name" value="" id="enter_text">
+                    <button type="submit" class="btn btn-primary" id="text-enter-button">Submit</button>
+                    </input>
+                </form>
+                <p>Enter a burger you want to eat Click the "Submit" button.</p>
             </div>
         </div>
     </div>
